@@ -1,0 +1,11 @@
+public without sharing class RequestController {
+    @AuraEnabled
+    public static String  getBBR() {
+       List<StaticResource> srList = [Select body, name from StaticResource where Name = 'BBR'];
+       StaticResource sr = srList.get(0);
+       //String s = EncodingUtil.base64Encode(sr.Body);
+       system.debug('## s =>' + sr.Body.toString());
+       return sr.Body.toString();
+    }
+
+}
