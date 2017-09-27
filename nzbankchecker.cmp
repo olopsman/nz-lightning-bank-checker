@@ -1,0 +1,32 @@
+<aura:component implements="force:hasSObjectName,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride" controller="RequestController" access="global">
+    <aura:attribute name="request" type="Merchant_Request__c" />
+    <aura:attribute name="isValid" type="Boolean" />
+    <aura:attribute name="isInvalid" type="Boolean" />
+    <aura:attribute name="bankid" type="String" />
+    <aura:attribute name="branchid" type="String" />
+    <aura:attribute name="accountbaseid" type="String" />
+    <aura:attribute name="suffixid" type="String" />
+    <aura:attribute name="isSettlement" type="Boolean"/>
+    <aura:attribute name="isDirectDebit" type="Boolean"/>
+    <ltng:require scripts="{!join(',',$Resource.BankCheckerJS, $Resource.BBRCacheJS)}" afterScriptsLoaded="{!c.afterScriptsLoaded}" />
+    <div class="column-container">
+      <aura:if isTrue="{!v.isSettlement}">
+      <lightning:input type="text" aura:id="bankid" value="{!v.request.Settlement_Bank_Account_Number_01a__c}" name="bankid" label="" maxlength="2" onchange="{!c.fieldChange}" class="bankid"/>
+      <lightning:input type="text" aura:id="branchid" value="{!v.request.Settlement_Bank_Account_Number_02__c}" name="branchid" label=""  maxlength="4"  onchange="{!c.fieldChange}" class="branchid"/>
+      <lightning:input type="text" aura:id="accountbaseid" value="{!v.request.Settlement_Bank_Account_Number_03__c}" name="accountbaseid" label=""  maxlength="7"  onchange="{!c.fieldChange}" class="accountbaseid"/>
+      <lightning:input type="text" aura:id="suffixid" value="{!v.request.Settlement_Bank_Account_Number_04__c}" name="suffixid" label=""  maxlength="3" onchange="{!c.fieldChange}" class="suffixid"/>
+      </aura:if>
+      <aura:if isTrue="{!v.isDirectDebit}">
+      <lightning:input type="text" aura:id="bankid" value="{!v.request.Direct_Debit_Bank_Account_Number_01a__c}" name="bankid" label="" maxlength="2" onchange="{!c.fieldChange}" class="bankid"/>
+      <lightning:input type="text" aura:id="branchid" value="{!v.request.Direct_Debit_Bank_Account_Number_02__c}" name="branchid" label=""  maxlength="4"  onchange="{!c.fieldChange}" class="branchid"/>
+      <lightning:input type="text" aura:id="accountbaseid" value="{!v.request.Direct_Debit_Bank_Account_Number_03__c}" name="accountbaseid" label=""  maxlength="7"  onchange="{!c.fieldChange}" class="accountbaseid"/>
+      <lightning:input type="text" aura:id="suffixid" value="{!v.request.Direct_Debit_Bank_Account_Number_04__c}" name="suffixid" label=""  maxlength="3" onchange="{!c.fieldChange}" class="suffixid"/>
+      </aura:if>
+      <aura:if isTrue="{!v.isValid}">
+        <span>Valid Account</span>
+      </aura:if>
+      <aura:if isTrue="{!v.isInvalid}">
+        <span>Invalid Account</span>
+      </aura:if>
+    </div>
+</aura:component>
